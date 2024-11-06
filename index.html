@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Teste se eu lembro mesmo</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+	<link rel="stylesheet" href="http://davidtkatz.com/public_css/vue.css">
+</head>
+<body>
+    <div id="app">
+        <question></question>
+        <question :question='"Quanto é 1 + 1"' :alternatives="
+        [{
+            text: '(a) 2',
+            id: 'a2'
+        },
+        {
+            text: '(b) 4',
+            id: 'b2'
+        },
+        {
+            text: '(c) 1',
+            id: 'c2'
+        }]
+        "></question>
+    </div>
+	<script>
+        var question = Vue.component('question', {
+            template: `
+                <div>
+                    Question: {{question}}    
+                    <div v-for="alternative in alternatives">
+                        <input type="radio" v-bind:id="alternative.id" :name="question"/>
+                        <label v-bind:for='alternative.id'>{{alternative.text}}</label>
+                    </div>
+                </div>
+            `,
+            props: {
+                question: {
+                    type: String,
+                    default: `Quanto é 2 + 2?`
+                },
+                alternatives: {
+                    type: Array,
+                    default: () => [    
+                        {
+                            text: '(a) 4',
+                            id: 'a'
+                        },
+                        {
+                            text: '(b) 2',
+                            id: 'b'
+                        },
+                        {
+                            text: '(c) 1',
+                            id: 'c'
+                        },
+                        {
+                            text: '(d) 6',
+                            id: 'd'
+                        }
+                    ]
+                }
+            }
+        })
+
+        var app = new Vue({
+            el: '#app', 
+            components: {
+                question
+            }
+        })
+	</script>
+</body>
+</html>
